@@ -10,9 +10,11 @@ namespace Player
 {
     public class Player : MonoBehaviour
     {
-        public List<Transform> playerObjects;
+        [SerializeField] private Counter _counter;
+        [Space]
+        [SerializeField] private float _roadHalfWidth = 2.75f;
+        [SerializeField] private float _speed = 1.2f;
 
-        [SerializeField] private Counter counter;
         
         private IInputService       _inputService;
         private IObjectGrouper      _objectGrouper;
@@ -21,9 +23,12 @@ namespace Player
         private PlayerObjectSpawner _playerObjectSpawner;
         private SphereCollider      _sphereCollider;
         
-        public  PlayerObjectSpawner PlayerObjectSpawner => _playerObjectSpawner;
-        public  SphereCollider      SphereCollider      => _sphereCollider;
+        public PlayerObjectSpawner PlayerObjectSpawner => _playerObjectSpawner;
+        public SphereCollider      SphereCollider      => _sphereCollider;
 
+        public List<Transform> PlayerObjects { get; } = new List<Transform>();
+        
+        
         private void Awake()
         {
             _inputService  = AllServices.Container.Single<IInputService>();
@@ -32,13 +37,13 @@ namespace Player
             
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
             
-            _playerMover         = new PlayerMover(_inputService);
+            _playerMover         = new PlayerMover(_inputService, _roadHalfWidth, _speed);
             _playerObjectSpawner = new PlayerObjectSpawner(this, _gameFactory, _objectGrouper);
             
-            _objectGrouper.GroupObjects(playerObjects, .5f);
-            _objectGrouper.CalculateGroupColliderSize(playerObjects, _sphereCollider);
+            _objectGrouper.GroupObjects(PlayerObjects, .5f);
+            _objectGrouper.CalculateGroupColliderSize(PlayerObjects, _sphereCollider);
             
-            UpdatePlayerCounterValue(playerObjects.Count);
+            UpdatePlayerCounterValue(PlayerObjects.Count);
         }
 
         private void Update()
@@ -52,7 +57,7 @@ namespace Player
 
         public void UpdatePlayerCounterValue(int newAmount)
         {
-            counter.ChangeCounterValue(newAmount);
+            _counter.ChangeCounterValue(newAmount);
         }
     }
 }

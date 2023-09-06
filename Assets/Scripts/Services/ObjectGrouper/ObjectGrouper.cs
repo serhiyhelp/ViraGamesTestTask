@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Services.ObjectGrouper
@@ -7,32 +8,25 @@ namespace Services.ObjectGrouper
     {
         public void GroupObjects(List<Transform> objectsToGroup, float groupingRadius)
         {
-            foreach (Transform obj in objectsToGroup)
+            foreach (var obj in objectsToGroup)
             {
-                List<Transform> nearbyObjects = GetNearbyObjects(obj, objectsToGroup, groupingRadius);
-                int numNearbyObjects = nearbyObjects.Count;
-                float angleBetweenObjects = 360.0f / numNearbyObjects;
-                for (int i = 0; i < numNearbyObjects; i++)
+                var nearbyObjects = GetNearbyObjects(obj, objectsToGroup, groupingRadius);
+                var nearbyObjectsCount = nearbyObjects.Count;
+                var angleBetweenObjects = 360.0f / nearbyObjectsCount;
+                for (var i = 0; i < nearbyObjectsCount; i++)
                 {
-                    float angle = i * angleBetweenObjects;
-                    Vector3 newPosition = obj.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * groupingRadius;
+                    var angle = i * angleBetweenObjects;
+                    var newPosition = obj.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * groupingRadius;
                     nearbyObjects[i].position = newPosition;
                 }
             }
         }
     
-        private List<Transform> GetNearbyObjects(Transform obj, List<Transform> objectsToGroup, float groupingRadius)
+        private static List<Transform> GetNearbyObjects(Transform obj, IEnumerable<Transform> objectsToGroup, float groupingRadius)
         {
-            List<Transform> nearbyObjects = new List<Transform>();
-            foreach (Transform otherObj in objectsToGroup)
-            {
-                if (otherObj != obj && Vector3.Distance(obj.position, otherObj.position) <= groupingRadius)
-                {
-                    nearbyObjects.Add(otherObj);
-                }
-            }
-
-            return nearbyObjects;
+            return objectsToGroup
+                   .Where(otherObj => otherObj != obj && Vector3.Distance(obj.position, otherObj.position) <= groupingRadius)
+                   .ToList();
         }
 
         public void CalculateGroupColliderSize(List<Transform> objectsToGroup, SphereCollider groupCollider)
@@ -44,17 +38,17 @@ namespace Services.ObjectGrouper
                 return;
             }
 
-            Vector3 minPosition = objectsToGroup[0].position;
-            Vector3 maxPosition = objectsToGroup[0].position;
+            var minPosition = objectsToGroup[0].position;
+            var maxPosition = objectsToGroup[0].position;
 
-            foreach (Transform obj in objectsToGroup)
+            foreach (var obj in objectsToGroup)
             {
                 minPosition = Vector3.Min(minPosition, obj.position);
                 maxPosition = Vector3.Max(maxPosition, obj.position);
             }
 
-            Vector3 center = (minPosition + maxPosition) / 2f;
-            Vector3 size = (maxPosition - minPosition) * 0.75f;
+            var center = (minPosition + maxPosition) / 2f;
+            var size = (maxPosition - minPosition) * 0.75f;
 
             groupCollider.center = new Vector3(0f, center.y, .5f);
             groupCollider.radius = size.x;

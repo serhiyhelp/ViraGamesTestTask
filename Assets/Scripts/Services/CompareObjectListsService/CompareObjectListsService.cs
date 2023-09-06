@@ -21,7 +21,7 @@ namespace Services.CompareObjectListsService
         {
             _objectMover.MoveAction(false);
 
-            var playerList = player.playerObjects;
+            var playerList = player.PlayerObjects;
             var enemyList = enemy.EnemySpotObjects;
 
             var playerListCount = playerList.Count;

@@ -21,12 +21,12 @@ namespace Player
             for (int i = 0; i < valueToAdd; i++)
             {
                 var playerObj = _gameFactory.CreatePlayerObject(_player.gameObject);
-                _player.playerObjects.Add(playerObj.transform);
-                _player.UpdatePlayerCounterValue(_player.playerObjects.Count);
+                _player.PlayerObjects.Add(playerObj.transform);
+                _player.UpdatePlayerCounterValue(_player.PlayerObjects.Count);
             }
             
-            _objectGrouper.GroupObjects(_player.playerObjects, .5f);
-            _objectGrouper.CalculateGroupColliderSize(_player.playerObjects,_player.SphereCollider);
+            _objectGrouper.GroupObjects(_player.PlayerObjects, .5f);
+            _objectGrouper.CalculateGroupColliderSize(_player.PlayerObjects,_player.SphereCollider);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Infrastructure.States
       
       var playerSpot = _gameFactory.CreatePlayerSpot(GameObject.FindWithTag(InitialPointTag));
       var playerObj = _gameFactory.CreatePlayerObject(playerSpot);
-      playerSpot.GetComponent<Player.Player>().playerObjects.Add(playerObj.transform);
+      playerSpot.GetComponent<Player.Player>().PlayerObjects.Add(playerObj.transform);
       playerSpot.GetComponent<Player.Player>().UpdatePlayerCounterValue(1);
       
       _stateMachine.Enter<GameLoopState>();

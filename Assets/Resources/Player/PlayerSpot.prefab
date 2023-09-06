@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecafe9c389c74dd9bdf6bc4bf017e4ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObjects: []
-  counter: {fileID: 4685580421662595416}
+  _counter: {fileID: 4685580421662595416}
+  _roadHalfWidth: 2.75
+  _speed: 1.2
 --- !u!54 &2487612875307205848
 Rigidbody:
   m_ObjectHideFlags: 0

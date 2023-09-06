@@ -45,7 +45,7 @@ namespace UpgradeWall
                         player.PlayerObjectSpawner.SpawnPlayerObject(_triggerValue);
                         break;
                     case WallType.MultiplyWall:
-                        var multiplyValue = player.playerObjects.Count * _triggerValue;
+                        var multiplyValue = player.PlayerObjects.Count * _triggerValue;
                         player.PlayerObjectSpawner.SpawnPlayerObject(multiplyValue);
                         break;
                 }

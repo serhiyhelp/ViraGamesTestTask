@@ -6,23 +6,24 @@ namespace Player
     public class PlayerMover
     {
         private readonly IInputService _inputService;
-
-        private const float Speed = 1.2f;
-        private const float MinX = -2.75f;
-        private const float MaxX = 2.75f;
+        private readonly float         _roadHalfWidth;
+        private readonly float         _speed;
+        
         private bool _isDragging = false;
         private Vector2 _startPos;
 
-        public PlayerMover(IInputService inputService)
+        public PlayerMover(IInputService inputService, float roadHalfWidth, float speed)
         {
-            _inputService = inputService;
+            _inputService  = inputService;
+            _roadHalfWidth = roadHalfWidth;
+            _speed         = speed;
         }
 
         public void UpdatePosMobile(Transform t)
         {
             if (_inputService.OnClicked)
             {
-                Touch touch = Input.GetTouch(0);
+                var touch = Input.GetTouch(0);
 
                 switch (touch.phase)
                 {
@@ -34,11 +35,11 @@ namespace Player
                     case TouchPhase.Moved:
                         if (_isDragging)
                         {
-                            float deltaX = touch.position.x - _startPos.x;
+                            var deltaX = touch.position.x - _startPos.x;
                             var position = t.position;
-                            float newX = position.x + deltaX * Speed * Time.deltaTime;
+                            var newX = position.x + deltaX * _speed * Time.deltaTime;
                             
-                            newX = Mathf.Clamp(newX, MinX, MaxX);
+                            newX = Mathf.Clamp(newX, -_roadHalfWidth, _roadHalfWidth);
                             
                             position = new Vector3(newX, position.y, position.z);
                             t.position = position;
@@ -65,10 +66,10 @@ namespace Player
             {
                 if (_isDragging)
                 {
-                    float deltaX = Input.mousePosition.x - _startPos.x;
+                    var deltaX = Input.mousePosition.x - _startPos.x;
                     var position = t.position;
-                    float newX = position.x + deltaX * Speed * Time.deltaTime;
-                    newX = Mathf.Clamp(newX, MinX, MaxX);
+                    var newX = position.x + deltaX * _speed * Time.deltaTime;
+                    newX = Mathf.Clamp(newX, -_roadHalfWidth, _roadHalfWidth);
                     position = new Vector3(newX, position.y, position.z);
                     t.position = position;
                     _startPos = Input.mousePosition;
