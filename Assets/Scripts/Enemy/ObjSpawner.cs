@@ -96,7 +96,6 @@ namespace Enemy
 
                 var enemySpot = RequestEnemySpot();
                 enemySpot.InitEnemySpot(_levelData, _factory, _objectGrouper, _compareService, _objectMover);
-                enemySpot.transform.rotation = Quaternion.Euler(0f, -180f, 0f);
                 enemySpot.gameObject.SetActive(true);
             }
         }

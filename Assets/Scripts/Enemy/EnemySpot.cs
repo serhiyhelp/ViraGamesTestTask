@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Infrastructure.Factory;
 using Logic;
@@ -6,49 +7,59 @@ using Services.ObjectGrouper;
 using Services.ObjectMover;
 using StaticData;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Enemy
 {
     public class EnemySpot : MonoBehaviour
     {
-        public List<Transform> enemySpotObjects = new List<Transform>();
-    
-        [SerializeField] private EnemySpotTrigger enemySpotTrigger;
-        [SerializeField] private Counter counter;
+        [SerializeField] private Counter _counter;
 
         private LevelStaticData _levelStaticData;
-        private Vector3 _fightTarget;
-        private bool _isFighting;
+        private Vector3         _fightTarget;
+        private bool            _isFighting;
 
-        private IGameFactory _gameFactory;
-        private IObjectGrouper _objectGrouper;
+        private IGameFactory               _gameFactory;
+        private IObjectGrouper             _objectGrouper;
         private ICompareObjectListsService _compareObjectListsService;
-        private IObjectMover _objectMover;
+        private IObjectMover               _objectMover;
 
-        public void InitEnemySpot(LevelStaticData levelStaticData,IGameFactory gameFactory, IObjectGrouper objectGrouper, ICompareObjectListsService compareObjectListsService, IObjectMover objectMover)
+        public List<Transform> EnemySpotObjects { get; } = new List<Transform>();
+
+        public void InitEnemySpot(LevelStaticData            levelStaticData,
+                                  IGameFactory               gameFactory,
+                                  IObjectGrouper             objectGrouper,
+                                  ICompareObjectListsService compareObjectListsService,
+                                  IObjectMover               objectMover)
         {
-            _objectMover = objectMover;
+            _objectMover               = objectMover;
             _compareObjectListsService = compareObjectListsService;
-            _objectGrouper = objectGrouper;
-            _levelStaticData = levelStaticData;
-            _gameFactory = gameFactory;
+            _objectGrouper             = objectGrouper;
+            _levelStaticData           = levelStaticData;
+            _gameFactory               = gameFactory;
 
             GenerateEnemySpotObjects();
-            enemySpotTrigger.InitEnemySpotTrigger(this, _compareObjectListsService);
-        
-            UpdateEnemySpotCounter(enemySpotObjects.Count);
+
+            UpdateEnemySpotCounter(EnemySpotObjects.Count);
             _isFighting = false;
+
+            transform.rotation = Quaternion.Euler(0f, -180f, 0f);
         }
 
-        public void SetupFightTarget(Vector3 fightTarget)
+        private void OnTriggerEnter(Collider other)
         {
-            _fightTarget = fightTarget;
-            _isFighting = true;
+            if (other.TryGetComponent<Player.Player>(out var player))
+            {
+                _isFighting  = true;
+                _fightTarget = player.transform.position;
+                StartCoroutine(_compareObjectListsService.CompareLists(this, player));
+            }
         }
 
         public void UpdateEnemySpotCounter(int newAmount)
         {
-            counter.ChangeCounterValue(newAmount);
+            _counter.ChangeCounterValue(newAmount);
         }
 
         private void Update()
@@ -65,15 +76,15 @@ namespace Enemy
         {
             var randomEnemyAmount = Random.Range(_levelStaticData.enemyAmountBounds.x, _levelStaticData.enemyAmountBounds.y + 1);
         
-            var diffAmount = enemySpotObjects.Count - randomEnemyAmount;
+            var diffAmount = EnemySpotObjects.Count - randomEnemyAmount;
             if (diffAmount < 0)
-                diffAmount = -(diffAmount);
+                diffAmount = -diffAmount;
         
-            for (int i = 0; i < diffAmount; i++)
+            for (var i = 0; i < diffAmount; i++)
             {
                 var newEnemyObj = _gameFactory.CreateEnemyObject(gameObject);
                 newEnemyObj.gameObject.SetActive(false);
-                enemySpotObjects.Add(newEnemyObj.transform);
+                EnemySpotObjects.Add(newEnemyObj.transform);
             }
         
             ActivateEnemies(randomEnemyAmount);
@@ -81,14 +92,14 @@ namespace Enemy
 
         private void ActivateEnemies(int randomEnemyAmount)
         {
-            if(randomEnemyAmount > enemySpotObjects.Count) return;
+            if(randomEnemyAmount > EnemySpotObjects.Count) return;
         
             for (int i = 0; i < randomEnemyAmount; i++)
             {
-                enemySpotObjects[i].gameObject.SetActive(true);
+                EnemySpotObjects[i].gameObject.SetActive(true);
             }
         
-            _objectGrouper.GroupObjects(enemySpotObjects, .5f);
+            _objectGrouper.GroupObjects(EnemySpotObjects, .5f);
         }
     }
 }
