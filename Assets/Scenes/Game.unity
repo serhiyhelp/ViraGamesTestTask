@@ -264,7 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 218884241}
   m_Layer: 0
-  m_Name: FinalRoadPoint
+  m_Name: End Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -448,9 +448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b84540bfb95cc8478f01b35f44f0445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 527720566}
-  endPoint: {fileID: 218884241}
-  threshold: 0.1
+  _startPoint: {fileID: 527720566}
+  _endPoint: {fileID: 218884241}
 --- !u!1 &458464873
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 527720566}
   m_Layer: 0
-  m_Name: 'StarRoadPoint '
+  m_Name: 'Start Point '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1613,9 +1612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b84540bfb95cc8478f01b35f44f0445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 527720566}
-  endPoint: {fileID: 218884241}
-  threshold: 0.1
+  _startPoint: {fileID: 527720566}
+  _endPoint: {fileID: 218884241}
 --- !u!1001 &1864311058
 PrefabInstance:
   m_ObjectHideFlags: 0

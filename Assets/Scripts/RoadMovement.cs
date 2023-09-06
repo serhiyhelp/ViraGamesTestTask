@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RoadMovement : MonoBehaviour
 {
-    public Transform startPoint;
-    public Transform endPoint;
-    public float threshold = 0.1f;
+    [SerializeField] private Transform _startPoint;
+    [SerializeField] private Transform _endPoint;
+    
     private IObjectMover _objectMover;
 
     private void Awake()
@@ -18,9 +18,9 @@ public class RoadMovement : MonoBehaviour
     {
         _objectMover.UpdateObjectPosition(transform, Vector3.back);
         
-        if (Vector3.Distance(transform.position, endPoint.position) < threshold)
+        if (transform.position.z < _endPoint.position.z)
         {
-            transform.position = startPoint.position;
+            transform.position = _startPoint.position;
         }
     }
 }
