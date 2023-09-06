@@ -7,17 +7,18 @@ namespace UpgradeWall
 {
     public class UpgradeWall : MonoBehaviour
     {
-        [SerializeField] private List<WallTrigger> wallTriggers;
+        [SerializeField] private List<WallTrigger> _wallTriggers;
+
         private IObjectMover _objectMover;
+        private float        _endPointZ;
 
 
-        public void InitUpgradeWall(LevelStaticData levelStaticData, IObjectMover objectMover)
+        public void InitUpgradeWall(LevelStaticData levelStaticData, IObjectMover objectMover, float endPointZ)
         {
+            _endPointZ   = endPointZ;
             _objectMover = objectMover;
 
             SetupWallTriggers(levelStaticData);
-            EnableTriggers();
-            Invoke(nameof(Hide), 14f);
         }
 
         private void SetupWallTriggers(LevelStaticData levelStaticData)
@@ -28,41 +29,28 @@ namespace UpgradeWall
                 levelStaticData.upgradeMultiplyAmountBounds.y + 1);
             var resultPlusValue = Mathf.RoundToInt(randomPlusValue / 5.0f) * 5;
 
-            foreach (var wall in wallTriggers)
+            foreach (var trigger in _wallTriggers)
             {
-                var randomValue = Random.Range(0, 2);
-                wall
-                    .InitTrigger(randomValue == 0 ? WallType.PlusWall : WallType.MultiplyWall,
-                    randomValue == 0 ? resultPlusValue : randomMultiplyValue,
-                    randomValue == 0 ? "+" + resultPlusValue : "x" + randomMultiplyValue,
-                    DisableTriggers);
+                if (Random.Range(0, 2) == 0)
+                    trigger.InitTrigger(WallType.PlusWall, resultPlusValue, DisableTriggers);
+                else
+                    trigger.InitTrigger(WallType.MultiplyWall, randomMultiplyValue, DisableTriggers);
             }
-        }
-
-        private void Hide()
-        {
-            gameObject.SetActive(false);
         }
 
         private void Update()
         {
             _objectMover.UpdateObjectPosition(transform, Vector3.back);
+
+            if (transform.position.z < _endPointZ)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
-        private void EnableTriggers()
-        {
-            foreach (var trigger in wallTriggers)
-            {
-                trigger.GetComponent<Collider>().enabled = true;
-            }
-        }
-        
         private void DisableTriggers()
         {
-            foreach (var trigger in wallTriggers)
-            {
-                trigger.GetComponent<Collider>().enabled = false;
-            }
+            foreach (var trigger in _wallTriggers) trigger.Disable();
         }
     }
 }

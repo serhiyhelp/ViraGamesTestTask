@@ -499,6 +499,7 @@ MonoBehaviour:
   _spawnSpotTransform: {fileID: 12837561}
   _enemySpawnSpotTransform: {fileID: 1219220743}
   _timer: {fileID: 759455811}
+  _endPoint: {fileID: 218884241}
 --- !u!1001 &483932246
 PrefabInstance:
   m_ObjectHideFlags: 0

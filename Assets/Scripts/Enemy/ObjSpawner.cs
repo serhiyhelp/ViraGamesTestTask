@@ -19,6 +19,7 @@ namespace Enemy
         [SerializeField] private GameObject        _spawnSpotTransform;
         [SerializeField] private GameObject        _enemySpawnSpotTransform;
         [SerializeField] private LevelPlayingTimer _timer;
+        [SerializeField] private Transform         _endPoint;
 
         private IGameFactory               _factory;
         private IStaticDataService         _staticData;
@@ -81,7 +82,7 @@ namespace Enemy
             while (true)
             {
                 var wall = RequestUpgradeWall();
-                wall.InitUpgradeWall(_levelData, _objectMover);
+                wall.InitUpgradeWall(_levelData, _objectMover, _endPoint.transform.position.z);
                 wall.gameObject.SetActive(true);
                 yield return new WaitForSeconds(7f);
             }

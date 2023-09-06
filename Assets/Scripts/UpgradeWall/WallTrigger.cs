@@ -6,23 +6,31 @@ namespace UpgradeWall
 {
     public class WallTrigger : MonoBehaviour
     {
-        [SerializeField] private GameObject hologram;
-        [SerializeField] private WallType wallType;
-        [SerializeField] private TextMeshPro valueText;
-        private int _triggerValue;
+        [SerializeField] private Collider    _collider;
+        [SerializeField] private GameObject  _hologram;
+        [SerializeField] private WallType    _wallType;
+        [SerializeField] private TextMeshPro _valueText;
+
+        private int    _triggerValue;
         private Action _triggerAction;
 
-        public void InitTrigger(WallType wallTypeValue,int value, string valueString, Action triggerAction = null)
+        public void InitTrigger(WallType wallTypeValue, int value, Action triggerAction = null)
         {
             if (value > 0)
             {
-                wallType = wallTypeValue;
-                _triggerValue = value;
-                valueText.text = valueString;
+                _wallType       = wallTypeValue;
+                _triggerValue   = value;
+                _valueText.text = (wallTypeValue == WallType.MultiplyWall ? "x" : "+") + value;
 
                 _triggerAction = triggerAction;
-                hologram.SetActive(true);
+                _hologram.SetActive(true);
+                _collider.enabled = true;
             }
+        }
+
+        public void Disable()
+        {
+            _collider.enabled = false;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -30,8 +38,8 @@ namespace UpgradeWall
             if (other.TryGetComponent<Player.Player>(out var player))
             {
                 _triggerAction?.Invoke();
-                hologram.gameObject.SetActive(false);
-                switch (wallType)
+                _hologram.gameObject.SetActive(false);
+                switch (_wallType)
                 {
                     case WallType.PlusWall:
                         player.PlayerObjectSpawner.SpawnPlayerObject(_triggerValue);

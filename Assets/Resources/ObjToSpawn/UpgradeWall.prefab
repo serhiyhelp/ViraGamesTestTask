@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6633942980608141627}
   - component: {fileID: 3721301805185969130}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Left Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,13 +108,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6633942980608141573}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.47, y: 0, z: -0.028}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.4700003, y: 0, z: -0.027999878}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6633942981203267902}
   m_Father: {fileID: 6633942981144634879}
-  m_RootOrder: 6
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6633942980608141627
 BoxCollider:
@@ -141,9 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49954cd8669941c08c7d5b4ba097db1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hologram: {fileID: 6633942981203267898}
-  wallType: 0
-  valueText: {fileID: 6633942981559350257}
+  _collider: {fileID: 6633942980608141627}
+  _hologram: {fileID: 6633942981203267898}
+  _wallType: 0
+  _valueText: {fileID: 6633942981559350257}
 --- !u!1 &6633942980795376500
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +173,7 @@ RectTransform:
   m_GameObject: {fileID: 6633942980795376500}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.10000038}
-  m_LocalScale: {x: 0.25, y: 0.54054064, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.5405406, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6633942982100946854}
@@ -345,13 +347,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6633942981203267902}
-  - {fileID: 6633942982100946854}
+  - {fileID: 6633942981983903288}
+  - {fileID: 6633942980608141572}
   - {fileID: 6633942981288227158}
   - {fileID: 6633942982076484191}
   - {fileID: 6633942980464862569}
-  - {fileID: 6633942981983903288}
-  - {fileID: 6633942980608141572}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db01f115585f97f4386b55e0532ed349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallTriggers:
+  _wallTriggers:
   - {fileID: 6966064596999132970}
   - {fileID: 3721301805185969130}
 --- !u!1 &6633942981203267898
@@ -397,12 +397,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6633942981203267898}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.25, y: 0, z: 0}
+  m_LocalPosition: {x: 0.22000027, y: 0, z: 0.027999878}
   m_LocalScale: {x: 4, y: 1.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6633942981559350258}
-  m_Father: {fileID: 6633942981144634879}
+  m_Father: {fileID: 6633942980608141572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6633942981203267903
@@ -579,7 +579,7 @@ RectTransform:
   m_GameObject: {fileID: 6633942981559350259}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.10000038}
-  m_LocalScale: {x: 0.25, y: 0.54054064, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.5405406, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6633942981203267902}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 6633942981983903295}
   - component: {fileID: 6966064596999132970}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Right Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -753,9 +753,10 @@ Transform:
   m_LocalPosition: {x: 2.04, y: 0, z: -0.028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6633942982100946854}
   m_Father: {fileID: 6633942981144634879}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6633942981983903295
 BoxCollider:
@@ -782,9 +783,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49954cd8669941c08c7d5b4ba097db1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hologram: {fileID: 6633942982100946850}
-  wallType: 0
-  valueText: {fileID: 6633942980795376490}
+  _collider: {fileID: 6633942981983903295}
+  _hologram: {fileID: 6633942982100946850}
+  _wallType: 0
+  _valueText: {fileID: 6633942980795376490}
 --- !u!1 &6633942982076484187
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,13 +897,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6633942982100946850}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.25, y: 0, z: 0}
+  m_LocalPosition: {x: 0.21000004, y: 0, z: 0.028}
   m_LocalScale: {x: 4, y: 1.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6633942980795376491}
-  m_Father: {fileID: 6633942981144634879}
-  m_RootOrder: 1
+  m_Father: {fileID: 6633942981983903288}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6633942982100946855
 MeshFilter:
