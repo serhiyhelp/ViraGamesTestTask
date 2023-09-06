@@ -8,23 +8,24 @@ namespace Windows
     public class StartScreen : WindowBase
     {
         [SerializeField] private TextMeshProUGUI coinAmountText;
-        private GameObject _levelTimePlayingCounter;
+
+        private LevelPlayingTimer _levelPlayingTimer;
 
         public void InitStartScreen(IObjectMover objectMover)
         {
             CloseButton.onClick.AddListener(StartGameClickAction);
 
             coinAmountText.text = PlayerPrefs.GetInt("Coin").ToString();
-            Time.timeScale = 0;
+            Time.timeScale      = 0;
             
             objectMover.MoveAction(true);
-            _levelTimePlayingCounter = GameObject.FindWithTag("GameLifeTime");
+            _levelPlayingTimer = FindObjectOfType<LevelPlayingTimer>();
         }
 
         private void StartGameClickAction()
         {
             Time.timeScale = 1;
-            _levelTimePlayingCounter.GetComponent<LevelPlayingTimer>().StartLevelPlayingCoroutine();
+            _levelPlayingTimer.StartLevelPlayingCoroutine();
         }
     }
 }
