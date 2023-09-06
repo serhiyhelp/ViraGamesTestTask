@@ -14,25 +14,25 @@ namespace Player
 
         [SerializeField] private Counter counter;
         
-        private IInputService _inputService;
-        private IObjectGrouper _objectGrouper;
-        private PlayerMover _playerMover;
-        private IGameFactory _gameFactory;
+        private IInputService       _inputService;
+        private IObjectGrouper      _objectGrouper;
+        private PlayerMover         _playerMover;
+        private IGameFactory        _gameFactory;
         private PlayerObjectSpawner _playerObjectSpawner;
+        private SphereCollider      _sphereCollider;
         
-        private SphereCollider _sphereCollider;
-        public PlayerObjectSpawner PlayerObjectSpawner => _playerObjectSpawner;
-        public SphereCollider SphereCollider => _sphereCollider;
+        public  PlayerObjectSpawner PlayerObjectSpawner => _playerObjectSpawner;
+        public  SphereCollider      SphereCollider      => _sphereCollider;
 
         private void Awake()
         {
-            _inputService = AllServices.Container.Single<IInputService>();
+            _inputService  = AllServices.Container.Single<IInputService>();
             _objectGrouper = AllServices.Container.Single<IObjectGrouper>();
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
+            _gameFactory   = AllServices.Container.Single<IGameFactory>();
             
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
             
-            _playerMover = new PlayerMover(_inputService);
+            _playerMover         = new PlayerMover(_inputService);
             _playerObjectSpawner = new PlayerObjectSpawner(this, _gameFactory, _objectGrouper);
             
             _objectGrouper.GroupObjects(playerObjects, .5f);
@@ -45,9 +45,9 @@ namespace Player
         {
 #if UNITY_EDITOR
             _playerMover.UpdatePosStandalone(transform);
-            return;
-#endif
+#else
             _playerMover.UpdatePosMobile(transform);
+#endif
         }
 
         public void UpdatePlayerCounterValue(int newAmount)
