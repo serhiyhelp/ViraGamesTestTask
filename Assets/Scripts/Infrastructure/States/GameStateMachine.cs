@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Infrastructure.Factory;
 using Infrastructure.Services;
 using Logic;
+using Services.Firebase;
 using Services.WindowService;
+using StaticData;
 
 namespace Infrastructure.States
 {
@@ -17,7 +19,7 @@ namespace Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>(), services.Single<IWindowService>()),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>(), services.Single<IWindowService>(), services.Single<FirebaseService>()),
         [typeof(GameLoopState)] = new GameLoopState(this),
         [typeof(ResetLevelState)] = new ResetLevelState(this, sceneLoader, loadingCurtain),
       };

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using Enemy;
+using Infrastructure.AssetManagement;
+using Services.Firebase;
 using Services.ObjectMover;
 using Services.WindowService;
 using UnityEngine;
@@ -8,13 +10,15 @@ namespace Services.CompareObjectListsService
 {
     public class CompareObjectListsService : ICompareObjectListsService
     {
-        private readonly IObjectMover _objectMover;
-        private readonly IWindowService _windowService;
+        private readonly IObjectMover    _objectMover;
+        private readonly IWindowService  _windowService;
+        private readonly FirebaseService _firebaseService;
 
-        public CompareObjectListsService(IObjectMover objectMover, IWindowService windowService)
+        public CompareObjectListsService(IObjectMover objectMover, IWindowService windowService, FirebaseService firebaseService)
         {
-            _objectMover = objectMover;
-            _windowService = windowService;
+            _objectMover     = objectMover;
+            _windowService   = windowService;
+            _firebaseService = firebaseService;
         }
         
         public IEnumerator CompareLists(EnemySpot enemy, Player.Player player)
@@ -22,10 +26,10 @@ namespace Services.CompareObjectListsService
             _objectMover.MoveAction(false);
 
             var playerList = player.PlayerObjects;
-            var enemyList = enemy.EnemySpotObjects;
+            var enemyList  = enemy.EnemySpotObjects;
 
             var playerListCount = playerList.Count;
-            var enemyListCount = enemyList.Count;
+            var enemyListCount  = enemyList.Count;
 
             var timeBetweenDisable = enemyListCount <= 10 ? 0.1f : .03f;
             
@@ -33,6 +37,11 @@ namespace Services.CompareObjectListsService
             {
                 if (playerListCount <= 0)
                 {
+
+                    var levelId = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+                    if (levelId == 0) levelId = 1;
+                    _firebaseService.LogLevelFail(levelId);
+                    
                     _windowService.Open(WindowID.DefeatScreen);
                     player.gameObject.SetActive(false);
                     yield break;
