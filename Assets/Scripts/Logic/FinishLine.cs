@@ -15,8 +15,8 @@ namespace Logic
 
         public void InitFinishLine()
         {
-            _objectMover     = AllServices.Container.Single<ObjectMover>();
-            _windowService   = AllServices.Container.Single<WindowService>();
+            _objectMover     = AllServices.Container.Single<IObjectMover>();
+            _windowService   = AllServices.Container.Single<IWindowService>();
             _firebaseService = AllServices.Container.Single<FirebaseService>();
         }
 
