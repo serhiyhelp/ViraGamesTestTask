@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Infrastructure.Factory;
 using Infrastructure.Services;
@@ -8,7 +7,6 @@ using Services.ObjectGrouper;
 using Services.ObjectMover;
 using StaticData;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Enemy
