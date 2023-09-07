@@ -1,9 +1,9 @@
 ﻿using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
+using Infrastructure.Services;
 using Logic;
 using Services.Firebase;
 using Services.WindowService;
-using StaticData;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -19,14 +19,14 @@ namespace Infrastructure.States
         private readonly IWindowService   _windowService;
         private readonly FirebaseService  _firebaseService;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory, IWindowService windowService, FirebaseService firebaseService)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services)
         {
             _stateMachine    = gameStateMachine;
             _sceneLoader     = sceneLoader;
             _loadingCurtain  = loadingCurtain;
-            _gameFactory     = gameFactory;
-            _windowService   = windowService;
-            _firebaseService = firebaseService;
+            _gameFactory     = services.Single<IGameFactory>();
+            _windowService   = services.Single<IWindowService>();
+            _firebaseService = services.Single<FirebaseService>();
         }
 
         public void Enter(string sceneName)

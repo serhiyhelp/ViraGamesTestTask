@@ -21,11 +21,8 @@ namespace Enemy
         [SerializeField] private LevelPlayingTimer _timer;
         [SerializeField] private Transform         _endPoint;
 
-        private IGameFactory               _factory;
-        private IStaticDataService         _staticData;
-        private IObjectGrouper             _objectGrouper;
-        private ICompareObjectListsService _compareService;
-        private IObjectMover               _objectMover;
+        private IGameFactory       _factory;
+        private IStaticDataService _staticData;
 
         private LevelStaticData               _levelData;
         private List<UpgradeWall.UpgradeWall> _upgradeWallPool = new List<UpgradeWall.UpgradeWall>();
@@ -38,9 +35,6 @@ namespace Enemy
         {
             _staticData     = AllServices.Container.Single<IStaticDataService>();
             _factory        = AllServices.Container.Single<IGameFactory>();
-            _objectGrouper  = AllServices.Container.Single<IObjectGrouper>();
-            _compareService = AllServices.Container.Single<ICompareObjectListsService>();
-            _objectMover    = AllServices.Container.Single<IObjectMover>();
 
             var levelData = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
 
@@ -82,7 +76,7 @@ namespace Enemy
             while (true)
             {
                 var wall = RequestUpgradeWall();
-                wall.InitUpgradeWall(_levelData, _objectMover, _endPoint.transform.position.z);
+                wall.InitUpgradeWall(_levelData, _endPoint.transform.position.z);
                 wall.gameObject.SetActive(true);
                 yield return new WaitForSeconds(7f);
             }
@@ -95,7 +89,7 @@ namespace Enemy
                 yield return new WaitForSeconds(5f);
 
                 var enemySpot = RequestEnemySpot();
-                enemySpot.InitEnemySpot(_levelData, _factory, _objectGrouper, _compareService, _objectMover);
+                enemySpot.InitEnemySpot(_levelData);
                 enemySpot.gameObject.SetActive(true);
             }
         }

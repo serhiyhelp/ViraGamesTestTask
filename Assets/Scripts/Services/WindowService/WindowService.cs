@@ -1,5 +1,6 @@
 ﻿using System;
 using Infrastructure.Factory;
+using Infrastructure.Services;
 using Services.ObjectMover;
 
 namespace Services.WindowService
@@ -9,9 +10,9 @@ namespace Services.WindowService
         private readonly IUIFactory _uiFactory;
         private readonly IObjectMover _objectMover;
 
-        public WindowService(IUIFactory uiFactory)
+        public WindowService()
         {
-            _uiFactory = uiFactory;
+            _uiFactory = AllServices.Container.Single<IUIFactory>();
         }
         
         public void Open(WindowID windowID, Action windowAction = null)

@@ -49,10 +49,10 @@ namespace Infrastructure.States
             _services.RegisterSingle<IObjectGrouper>(new ObjectGrouper());
             _services.RegisterSingle<IObjectMover>(new ObjectMover());
             _services.RegisterSingle<IResetGameService>(new ResetGameService(_stateMachine));
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
-            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IStaticDataService>(),_services.Single<IObjectMover>(), _services.Single<IResetGameService>()));
-            _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
-            _services.RegisterSingle<ICompareObjectListsService>(new CompareObjectListsService(_services.Single<IObjectMover>(), _services.Single<IWindowService>(), _services.Single<FirebaseService>()));
+            _services.RegisterSingle<IGameFactory>(new GameFactory());
+            _services.RegisterSingle<IUIFactory>(new UIFactory());
+            _services.RegisterSingle<IWindowService>(new WindowService());
+            _services.RegisterSingle<ICompareObjectListsService>(new CompareObjectListsService());
         }
 
         private void RegisterStaticData()

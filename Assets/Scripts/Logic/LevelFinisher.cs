@@ -13,18 +13,12 @@ namespace Logic
 
         [Space]
         [SerializeField] private Vector3 _finishLineSpawnPosition = new Vector3(0, 4.08f, 75f);
-        
-        private IGameFactory    _factory;
-        private IWindowService  _windowService;
-        private IObjectMover    _objectMover;
-        private FirebaseService _firebaseService;
+
+        private IGameFactory _factory;
 
         private void Awake()
         {
-            _factory         = AllServices.Container.Single<IGameFactory>();
-            _windowService   = AllServices.Container.Single<IWindowService>();
-            _objectMover     = AllServices.Container.Single<IObjectMover>();
-            _firebaseService = AllServices.Container.Single<FirebaseService>();
+            _factory = AllServices.Container.Single<IGameFactory>();
         }
         private void OnEnable()
         {
@@ -39,7 +33,7 @@ namespace Logic
         private void OnTimePassed()
         {
             var finishLine = _factory.CreateFinishLine(_finishLineSpawnPosition).GetComponent<FinishLine>();
-            finishLine.InitFinishLine(_windowService, _objectMover, _firebaseService);
+            finishLine.InitFinishLine();
         }
     }
 }

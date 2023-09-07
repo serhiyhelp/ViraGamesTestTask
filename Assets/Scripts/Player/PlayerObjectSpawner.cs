@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Factory;
+using Infrastructure.Services;
 using Services.ObjectGrouper;
 
 namespace Player
@@ -9,11 +10,11 @@ namespace Player
         private readonly IGameFactory _gameFactory;
         private readonly IObjectGrouper _objectGrouper;
 
-        public PlayerObjectSpawner(Player player,IGameFactory gameFactory, IObjectGrouper objectGrouper)
+        public PlayerObjectSpawner(Player player)
         {
-            _player = player;
-            _gameFactory = gameFactory;
-            _objectGrouper = objectGrouper;
+            _player        = player;
+            _gameFactory   = AllServices.Container.Single<IGameFactory>();
+            _objectGrouper = AllServices.Container.Single<IObjectGrouper>();
         }
 
         public void SpawnPlayerObject(int valueToAdd)

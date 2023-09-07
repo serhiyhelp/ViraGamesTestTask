@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
+using Infrastructure.Services;
 using Services.ObjectMover;
 using StaticData;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace UpgradeWall
 {
@@ -13,10 +16,14 @@ namespace UpgradeWall
         private float        _endPointZ;
 
 
-        public void InitUpgradeWall(LevelStaticData levelStaticData, IObjectMover objectMover, float endPointZ)
+        private void Awake()
+        {
+            _objectMover = AllServices.Container.Single<IObjectMover>();
+        }
+
+        public void InitUpgradeWall(LevelStaticData levelStaticData, float endPointZ)
         {
             _endPointZ   = endPointZ;
-            _objectMover = objectMover;
 
             SetupWallTriggers(levelStaticData);
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Enemy;
 using Infrastructure.AssetManagement;
+using Infrastructure.Services;
 using Services.Firebase;
 using Services.ObjectMover;
 using Services.WindowService;
@@ -14,11 +15,11 @@ namespace Services.CompareObjectListsService
         private readonly IWindowService  _windowService;
         private readonly FirebaseService _firebaseService;
 
-        public CompareObjectListsService(IObjectMover objectMover, IWindowService windowService, FirebaseService firebaseService)
+        public CompareObjectListsService()
         {
-            _objectMover     = objectMover;
-            _windowService   = windowService;
-            _firebaseService = firebaseService;
+            _objectMover     = AllServices.Container.Single<IObjectMover>();
+            _windowService   = AllServices.Container.Single<IWindowService>();
+            _firebaseService = AllServices.Container.Single<FirebaseService>();
         }
         
         public IEnumerator CompareLists(EnemySpot enemy, Player.Player player)

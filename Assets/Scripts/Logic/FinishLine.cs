@@ -1,4 +1,5 @@
 ﻿using Infrastructure.AssetManagement;
+using Infrastructure.Services;
 using Services.Firebase;
 using Services.ObjectMover;
 using Services.WindowService;
@@ -12,11 +13,11 @@ namespace Logic
         private FirebaseService _firebaseService;
         private IObjectMover   _objectMover;
 
-        public void InitFinishLine(IWindowService windowService, IObjectMover objectMover, FirebaseService firebaseService)
+        public void InitFinishLine()
         {
-            _objectMover     = objectMover;
-            _windowService   = windowService;
-            _firebaseService = firebaseService;
+            _objectMover     = AllServices.Container.Single<ObjectMover>();
+            _windowService   = AllServices.Container.Single<WindowService>();
+            _firebaseService = AllServices.Container.Single<FirebaseService>();
         }
 
         private void Update()

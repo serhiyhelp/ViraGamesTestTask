@@ -15,8 +15,7 @@ namespace Player
         [SerializeField] private float _roadHalfWidth = 2.75f;
         [SerializeField] private float _speed = 1.2f;
 
-        
-        private IInputService       _inputService;
+
         private IObjectGrouper      _objectGrouper;
         private PlayerMover         _playerMover;
         private IGameFactory        _gameFactory;
@@ -31,14 +30,13 @@ namespace Player
         
         private void Awake()
         {
-            _inputService  = AllServices.Container.Single<IInputService>();
             _objectGrouper = AllServices.Container.Single<IObjectGrouper>();
             _gameFactory   = AllServices.Container.Single<IGameFactory>();
             
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
             
-            _playerMover         = new PlayerMover(_inputService, _roadHalfWidth, _speed);
-            _playerObjectSpawner = new PlayerObjectSpawner(this, _gameFactory, _objectGrouper);
+            _playerMover         = new PlayerMover(_roadHalfWidth, _speed);
+            _playerObjectSpawner = new PlayerObjectSpawner(this);
             
             _objectGrouper.GroupObjects(PlayerObjects, .5f);
             _objectGrouper.CalculateGroupColliderSize(PlayerObjects, _sphereCollider);

@@ -1,4 +1,5 @@
-﻿using Services.Input;
+﻿using Infrastructure.Services;
+using Services.Input;
 using UnityEngine;
 
 namespace Player
@@ -12,9 +13,9 @@ namespace Player
         private bool _isDragging = false;
         private Vector2 _startPos;
 
-        public PlayerMover(IInputService inputService, float roadHalfWidth, float speed)
+        public PlayerMover(float roadHalfWidth, float speed)
         {
-            _inputService  = inputService;
+            _inputService  = AllServices.Container.Single<IInputService>();
             _roadHalfWidth = roadHalfWidth;
             _speed         = speed;
         }

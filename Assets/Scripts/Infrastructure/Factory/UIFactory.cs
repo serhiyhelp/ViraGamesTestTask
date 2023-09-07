@@ -1,4 +1,5 @@
 using Windows;
+using Infrastructure.Services;
 using Services;
 using Services.ObjectMover;
 using Services.WindowService;
@@ -19,11 +20,11 @@ namespace Infrastructure.Factory
 
         private Transform _uiRoot;
 
-        public UIFactory(IStaticDataService staticDataService, IObjectMover objectMover,IResetGameService resetGameService)
+        public UIFactory()
         {
-            _staticData = staticDataService;
-            _objectMover = objectMover;
-            _resetGameService = resetGameService;
+            _staticData = AllServices.Container.Single<IStaticDataService>();
+            _objectMover = AllServices.Container.Single<IObjectMover>();
+            _resetGameService = AllServices.Container.Single<IResetGameService>();
         }
         
         public void CreateStartScreen()

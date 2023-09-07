@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Infrastructure.Factory;
+using Infrastructure.Services;
 using Logic;
 using Services.CompareObjectListsService;
 using Services.ObjectGrouper;
@@ -27,17 +28,14 @@ namespace Enemy
 
         public List<Transform> EnemySpotObjects { get; } = new List<Transform>();
 
-        public void InitEnemySpot(LevelStaticData            levelStaticData,
-                                  IGameFactory               gameFactory,
-                                  IObjectGrouper             objectGrouper,
-                                  ICompareObjectListsService compareObjectListsService,
-                                  IObjectMover               objectMover)
+        public void InitEnemySpot(LevelStaticData levelStaticData)
         {
-            _objectMover               = objectMover;
-            _compareObjectListsService = compareObjectListsService;
-            _objectGrouper             = objectGrouper;
-            _levelStaticData           = levelStaticData;
-            _gameFactory               = gameFactory;
+            _levelStaticData = levelStaticData;
+            
+            _objectMover               = AllServices.Container.Single<IObjectMover>();
+            _compareObjectListsService = AllServices.Container.Single<ICompareObjectListsService>();
+            _objectGrouper             = AllServices.Container.Single<IObjectGrouper>();
+            _gameFactory               = AllServices.Container.Single<IGameFactory>();
 
             GenerateEnemySpotObjects();
 

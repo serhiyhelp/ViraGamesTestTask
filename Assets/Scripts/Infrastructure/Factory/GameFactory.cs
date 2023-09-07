@@ -1,4 +1,5 @@
 using Infrastructure.AssetManagement;
+using Infrastructure.Services;
 using UnityEngine;
 
 namespace Infrastructure.Factory
@@ -7,9 +8,9 @@ namespace Infrastructure.Factory
   {
     private readonly IAssetProvider _assets;
 
-    public GameFactory(IAssetProvider assets)
+    public GameFactory()
     {
-      _assets = assets;
+      _assets = AllServices.Container.Single<IAssetProvider>();
     }
 
     public GameObject CreatePlayerSpot(GameObject at) =>
