@@ -1,17 +1,20 @@
+using Logic;
 using UnityEngine;
 
 namespace Services.ObjectMover
 {
     public class ObjectMover : IObjectMover
     {
-        private float _speed = 10f;
         private bool  _isMoveAvailable;
+
+        public float Speed { get; set; } = 10f;
+
 
         public void UpdateObjectPosition(Transform t, Vector3 direction)
         {
             if(!_isMoveAvailable) return;
         
-            t.Translate(direction * (_speed * Time.deltaTime));
+            t.Translate(direction * (Speed * Time.deltaTime));
         }
 
         public void MoveAction(bool isAvailable)
@@ -21,7 +24,7 @@ namespace Services.ObjectMover
 
         public void MoveTowardsToObject(Transform t, Vector3 target)
         {
-            t.position = Vector3.MoveTowards(t.position, target, _speed * Time.deltaTime);
+            t.position = Vector3.MoveTowards(t.position, target, Speed * Time.deltaTime);
         }
     }
 }
