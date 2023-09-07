@@ -43,6 +43,8 @@ namespace Player
             _objectGrouper.GroupObjects(PlayerObjects, .5f);
             _objectGrouper.CalculateGroupColliderSize(PlayerObjects, _sphereCollider);
             
+            var playerObj = _gameFactory.CreatePlayerObject(gameObject);
+            PlayerObjects.Add(playerObj.transform);
             UpdatePlayerCounterValue(PlayerObjects.Count);
         }
 

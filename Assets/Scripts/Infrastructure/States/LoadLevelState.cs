@@ -12,12 +12,12 @@ namespace Infrastructure.States
     {
         private const string InitialPointTag = "InitialPoint";
 
-        private readonly GameStateMachine   _stateMachine;
-        private readonly SceneLoader        _sceneLoader;
-        private readonly LoadingCurtain     _loadingCurtain;
-        private readonly IGameFactory       _gameFactory;
-        private readonly IWindowService     _windowService;
-        private readonly FirebaseService    _firebaseService;
+        private readonly GameStateMachine _stateMachine;
+        private readonly SceneLoader      _sceneLoader;
+        private readonly LoadingCurtain   _loadingCurtain;
+        private readonly IGameFactory     _gameFactory;
+        private readonly IWindowService   _windowService;
+        private readonly FirebaseService  _firebaseService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory, IWindowService windowService, FirebaseService firebaseService)
         {
@@ -41,13 +41,9 @@ namespace Infrastructure.States
         private void OnLoaded()
         {
             _windowService.Open(WindowID.StartScreen);
-      
-            var playerSpot = _gameFactory.CreatePlayerSpot(GameObject.FindWithTag(InitialPointTag));
-            var playerObj  = _gameFactory.CreatePlayerObject(playerSpot);
-            playerSpot.GetComponent<Player.Player>().PlayerObjects.Add(playerObj.transform);
-            playerSpot.GetComponent<Player.Player>().UpdatePlayerCounterValue(1);
+            _gameFactory.CreatePlayerSpot(GameObject.FindWithTag(InitialPointTag));
 
-            var levelId = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
+            var levelId               = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelKey);
             if (levelId == 0) levelId = 1;
             _firebaseService.LogLevelStart(levelId);
             
